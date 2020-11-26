@@ -4,6 +4,7 @@
  * Basic concept follows https://www.justinmccandless.com/post/a-tutorial-for-getting-started-with-gulp/
  */
 const gulp = require('gulp');
+const watch = require('gulp-watch');
 
 // Include plug-ins
 const babel = require('gulp-babel');
@@ -33,6 +34,11 @@ function _javascripts() {
 
 // Default task producing a jekyll-ready site in the dist folder
 gulp.task('default', gulp.series(_clean, _copy, _javascripts));
+
+// Add gulp watch files for automatically reload
+gulp.task('watch', function () {
+    return watch('src/**/*', gulp.series(_copy, _javascripts));
+});
 
 // Run Jekyll
 gulp.task('jekyll', gulp.series('default', function (gulpCallBack) {
